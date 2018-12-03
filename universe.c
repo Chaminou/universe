@@ -6,12 +6,13 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <unistd.h>
 
 #define TIMESTEP 0.01
-#define GRAVITATIONCONST 1000
+#define GRAVITATIONCONST 10000
 
-#define SCREENX 1600
-#define SCREENY 900
+#define SCREENX 1920
+#define SCREENY 1080
 
 #define RECTSIZE 4
 #define DEMIRECTSIZE 2
@@ -177,7 +178,7 @@ void compute_acceleration(struct etoile * tab, int nb_etoile){
       if(j!=i){
         u.x = tab[j].position.x - tab[i].position.x;
         u.y = tab[j].position.y - tab[i].position.y;
-        distance3 = pow(u.x*u.x + u.y*u.y, (float)(3/2));
+        distance3 = pow(u.x*u.x + u.y*u.y, (float)(3)/2);
 
         tab[i].acceleration.x += (GRAVITATIONCONST*tab[j].mass/distance3)*u.x;
         tab[i].acceleration.y += (GRAVITATIONCONST*tab[j].mass/distance3)*u.y;
@@ -207,10 +208,10 @@ int main(int argc, char **argv){
   int running = 1;
   int draw_speed = 0;
   int draw_acceleration = 0;
-  int nb_etoile = 30;
+  int nb_etoile = atoi(argv[1]);
 
-  if(argc == 2 && (argv[1][0] == 's' || argv[1][0] == 'f')){draw_speed = 1;}
-  if(argc == 2 && (argv[1][0] == 'a' || argv[1][0] == 'f')){draw_acceleration = 1;}
+  if(argc == 3 && (argv[2][0] == 's' || argv[2][0] == 'f')){draw_speed = 1;}
+  if(argc == 3 && (argv[2][0] == 'a' || argv[2][0] == 'f')){draw_acceleration = 1;}
 
   srand(time(NULL));
 
